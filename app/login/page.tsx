@@ -23,23 +23,15 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-  const [isMerchant, setisMerchant] = useState(false);
-  const { login, user } = useAuth();
+  const { login } = useAuth();
   const { toast } = useToast();
-  const inputType = isMerchant ? "tel" : "email";
-  const inputPlaceholder = isMerchant ? "012345678" : "hello@example.com";
-  const labelText = isMerchant ? "Phone Number" : "Email";
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
     let result;
     try {
-      if (!isMerchant) {
-        result = await login({ email, password });
-      } else {
-        result = await login({ phoneNumber: email, password });
-      }
+      result = await login({ email, password });
       if (result && result.role) {
         toast({
           variant: "success",
@@ -68,34 +60,20 @@ export default function Login() {
             </div>
           </div>
           <CardTitle className="text-2xl">
-            Sign in to Restaurant Portal
+            Sign in to Go SuperAdmin Portal
           </CardTitle>
           <CardDescription>
-            Manage your restaurant, and bookings
+            Manage your tickets and event efficiently
           </CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
-            <div className="flex items-center space-x-2">
-              <Checkbox
-                id="merchant"
-                checked={isMerchant}
-                onCheckedChange={(e) => setisMerchant(e === true)}
-              />
-              <Label
-                htmlFor="merchant"
-                className="text-sm font-normal cursor-pointer"
-              >
-                I am a Branch Restaurant (use phone number)
-              </Label>
-            </div>
-
             <div className="space-y-2">
-              <Label htmlFor="email">{labelText}</Label>
+              <Label htmlFor="email">Email</Label>
               <Input
                 id="email"
-                type={inputType}
-                placeholder={inputPlaceholder}
+                type="email"
+                placeholder="email@gmail.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required

@@ -39,7 +39,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const login = async (payload: LoginPayload): Promise<LoginResponse> => {
     const URL = process.env.NEXT_PUBLIC_API_URL;
     const actualCacheKey = ["login", payload.email ? "email" : "phoneNumber"];
-    const loginEndpoint = payload.email ? `${URL}/auth/admin/login` : `${URL}/auth/branch/login`;
+    // const loginEndpoint = payload.email ? `${URL}/auth/admin/login` : `${URL}/auth/branch/login`;
+    const loginEndpoint = `${URL}/auth/admin/login`;
     setLoading(true);
     try {
       // Construct payload with default values for optional fields
